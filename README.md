@@ -66,8 +66,34 @@ Author: [Enes Sönmez](https://github.com/eness)
    sudo service docker restart
    ```
 
-9. If you want to connect your docker host using PhpStorm, you should copy `ca.pem`, `cert.pem` and `key.pem` files to your local computer, into a folder and create a connection to your instance as shown in the picture.
+9. If you want to connect your docker host using PhpStorm, you should copy `ca.pem`, `cert.pem` and `key.pem` files to your local computer, into a folder (`C:\my-certs` eg.) and create a connection to your instance as shown in the picture.
 
+![PhpStorm Docker Connection](phpstorm-connection.jpg "PhpStorm Docker Connection")
+
+
+## Troubleshooting
+
+If your Docker setup is not working properly with the generated certificates and you suspect that the firewall (e.g., ufw) might be causing issues, you can consider allowing incoming connections on port 2375. Here's how you can do that using ufw:
+
+Allow incoming connections on port 2375:
+
+   ```bash
+   sudo ufw allow 2375
+   ```
+
+This command allows incoming connections on port 2375, which is the default port for the Docker API. Make sure to verify that this port is indeed used for your Docker API in your configuration.
+
+If you're using a secure Docker daemon (with TLS), you might need to allow port 2376 as well:
+
+   ```bash
+   sudo ufw allow 2376
+   ```
+
+Port 2376 is the default port for a secure Docker daemon that uses TLS for encryption.
+
+After allowing the necessary ports, try connecting to your Docker daemon again and see if the issue is resolved.
+
+Remember that opening ports on your firewall can have security implications, so ensure that you are allowing connections only as needed and that you have taken appropriate security measures, such as using secure certificates and proper authentication methods for Docker.
    
 
 ## Important Notes
